@@ -685,7 +685,21 @@ setInterval(async () => {
     }
 }, KEEP_ALIVE_INTERVAL);
 
+// --- የድሮውን app.listen አጥፍተህ በዚህ ተካው ---
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     setTimeout(syncFromGoogleSheets, 5000);
+
+    // 🚀 ሰርቨሩ እንደተነሳ የራሱን ዌብሁክ በራሱ በጀርባ ይጠራል (አውቶማቲክ እንዲሆን)
+    if (WEB_URL) {
+        setTimeout(async () => {
+            try {
+                console.log("🔄 Automatically triggering Webhook registration...");
+                const response = await axios.get(`${WEB_URL}/api/set-webhook`);
+                console.log("✅ Webhook auto-setup response:", response.data);
+            } catch (err) {
+                console.error("❌ Webhook auto-setup failed:", err.message);
+            }
+        }, 8000); // ሰርቨሩ ሙሉ በሙሉ ተነስቶ እስኪረጋጋ 8 ሰከንድ ጠብቆ ይጀምራል
+    }
 });
