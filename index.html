@@ -65,11 +65,34 @@
 
         <div class="w-full max-w-sm mt-4 flex flex-col items-center text-center gap-4 bg-slate-900/40 p-6 rounded-[2rem] border border-white/5">
             
-            <div id="image-container" class="flex justify-center items-center gap-4 w-full h-44">
-                <img id="book-img" src="https://res.cloudinary.com/dlthi9a6h/image/upload/v1780275499/gbou0ytluerz7qozak6o.jpg" alt="Book Cover" class="w-32 h-44 object-cover rounded-lg shadow-2xl border border-white/10">
-                <div id="video-emoji-box" class="w-32 h-44 flex flex-col justify-center items-center bg-gradient-to-br from-slate-800 to-slate-950 rounded-lg border border-white/10 shadow-2xl hidden">
-                    <span class="text-5xl mb-2">🎬</span>
-                    <span class="text-[10px] font-bold tracking-widest text-[#2dd4bf] uppercase">VIDEO BUNDLE</span>
+            <div id="image-container" class="flex justify-center items-center gap-4 w-full h-44 relative overflow-visible">
+                <!-- 1. V-shape covers for Book-only mode (currentMode === 1) -->
+                <div id="book-covers-container" class="relative w-64 h-44 overflow-visible flex justify-center items-center">
+                    <!-- Book 1 (Volume 1) -->
+                    <img id="book-img-1" src="https://res.cloudinary.com/dlthi9a6h/image/upload/v1780275499/gbou0ytluerz7qozak6o.jpg" alt="Volume 1" 
+                         class="w-28 h-40 object-cover rounded-lg shadow-2xl border border-white/10 absolute transition-all duration-500 origin-bottom cursor-pointer">
+                    <!-- Book 2 (Volume 2) -->
+                    <img id="book-img-2" src="https://res.cloudinary.com/dlthi9a6h/image/upload/v1783469941/t9omu78mp9yqm2quvsto.png" alt="Volume 2" 
+                         class="w-28 h-40 object-cover rounded-lg shadow-2xl border border-white/10 absolute transition-all duration-500 origin-bottom cursor-pointer">
+                </div>
+
+                <!-- 2. Single Book Cover (for Both mode, currentMode === 3) -->
+                <img id="single-book-img" src="https://res.cloudinary.com/dlthi9a6h/image/upload/v1780275499/gbou0ytluerz7qozak6o.jpg" alt="Selected Volume" 
+                     class="w-28 h-40 object-cover rounded-lg shadow-2xl border border-white/10 hidden">
+
+                <!-- 3. Video Emoji Box (for Video-only or Both modes) -->
+                <div id="video-emoji-box" class="w-28 h-40 flex flex-col justify-center items-center bg-gradient-to-br from-slate-800 to-slate-950 rounded-lg border border-white/10 shadow-2xl hidden">
+                    <span class="text-4xl mb-2">🎬</span>
+                    <span class="text-[9px] font-bold tracking-widest text-[#2dd4bf] uppercase">VIDEO BUNDLE</span>
+                </div>
+            </div>
+
+            <!-- Volume selector buttons, visible only when Mode is Book (1) or Both (3) -->
+            <div id="volume-selector-container" class="w-full flex flex-col gap-2 mt-1">
+                <span id="volume-selector-label" class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Select Volume / ቅጽ ይምረጡ</span>
+                <div class="grid grid-cols-2 gap-2 bg-slate-950/60 p-1 rounded-xl border border-white/5">
+                    <button type="button" onclick="setVolume(1)" id="vol-1-btn" class="py-2 text-xs font-bold rounded-lg transition-all bg-[#2dd4bf] text-black">ቅጽ 1 (Vol 1)</button>
+                    <button type="button" onclick="setVolume(2)" id="vol-2-btn" class="py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-white">ቅጽ 2 (Vol 2)</button>
                 </div>
             </div>
             
@@ -142,14 +165,27 @@
 
     <script>
         // 🛍️ ሙሉ በሙሉ የትሬዲንግ ስነ-ልቦና ላይ ብቻ ያተኮሩ መግለጫዎች
- const packages = {
+        const packages = {
             1: {
                 key: "Book",
-                title_en: "The Negadras Book (PDF) Only",
-                title_am: "«ነጋድራሱ» መጽሐፍ (PDF) ብቻ",
-                desc_en: `"NegadRasu" is the first comprehensive Amharic trading psychology book compiled by Natnael Biruk. Just as the historic trade generals led commerce with wisdom and discipline, this book guides today's youth from emotional chaos to mental clarity, making them true leaders in Forex, Crypto, and life success.`,
-                desc_am: `«ነጋድራሱ» በአዘጋጅ ናትናኤል ብሩክ የቀረበ የመጀመሪያው የተሟላ አማርኛ የትሬዲንግ ስነልቦና መጽሐፍ ነው። የቀደሙት የንግድ ጄኔራሎች ነጋድራሶች በዕውቀትና በሥርዓት የንግድ መስመሩን እንደመሩት ሁሉ፣ ይህ መጽሐፍ የዛሬውን ወጣት ከስሜት ማዕበል ወደ አዕምሮ ሰላም በመውሰድ በፎሬክስ, ክሪፕቶ እና በህይወት ስኬት ላይ እውነተኛ መሪ ያደርገዋል።`,
-                price: "799.00"
+                volumes: {
+                    1: {
+                        key_suffix: " Volume 1",
+                        title_en: "The Negadras Book (PDF) Only - Volume 1",
+                        title_am: "«ነጋድራሱ» መጽሐፍ (PDF) ብቻ - ቅጽ 1",
+                        desc_en: `"NegadRasu" is the first comprehensive Amharic trading psychology book compiled by Natnael Biruk. Just as the historic trade generals led commerce with wisdom and discipline, this book guides today's youth from emotional chaos to mental clarity, making them true leaders in Forex, Crypto, and life success.`,
+                        desc_am: `«ነጋድራሱ» በአዘጋጅ ናትናኤል ብሩክ የቀረበ የመጀመሪያው የተሟላ አማርኛ የትሬዲንግ ስነልቦና መጽሐፍ ነው። የቀደሙት የንግድ ጄኔራሎች ነጋድራሶች በዕውቀትና በሥርዓት የንግድ መስመሩን እንደመሩት ሁሉ፣ ይህ መጽሐፍ የዛሬውን ወጣት ከስሜት ማዕበል ወደ አዕምሮ ሰላም በመውሰድ በፎሬክስ, ክሪፕቶ እና በህይወት ስኬት ላይ እውነተኛ መሪ ያደርገዋል።`,
+                        price: "799.00"
+                    },
+                    2: {
+                        key_suffix: " Volume 2",
+                        title_en: "The Negadras Book (PDF) Only - Volume 2",
+                        title_am: "«ነጋድራሱ» መጽሐፍ (PDF) ብቻ - ቅጽ 2",
+                        desc_en: `"Negadras Volume 2: Trading and Our Nervous System; Market Decisions Measured by Science" by Natnael Biruk. This book examines trading decisions through the lens of neuroscience, offering practical guidance on cognitive control, emotional balance, and scientific risk execution in financial markets.`,
+                        desc_am: `«ነጋድራሱ ቅጽ ፪» ትሬዲንግ እና የነርቭ ሥርዓታችን፤ የገበያ ውሳኔዎች በሳይንስ ሲመዘኑ በአዘጋጅ ናትናኤል ብሩክ። ይህ መጽሐፍ በፎሬክስ እና ክሪፕቶ ገበያ ውስጥ የሚሰጡ የውሳኔ አወሳሰድ ሂደቶችን በነርቭ ሳይንስ እይታ በመተንተን፣ ስሜትን በመቆጣጠር ረገድ ከፍተኛ ሳይንሳዊ ግንዛቤዎችን የሚሰጥ የትሬዲንግ ስነ-ልቦና መመሪያ ነው።`,
+                        price: "999.00 ለ 24 ሰአት ብቻ"
+                    }
+                }
             },
             2: {
                 key: "Video",
@@ -161,14 +197,28 @@
             },
             3: {
                 key: "Both",
-                title_en: "Both (Book + 30 Videos Bundle)",
-                title_am: "ሁለቱንም በአንድ ላይ (መጽሐፍ + 30 ቪዲዮዎች)",
-                desc_en: `The Ultimate Trading Psychology Arsenal! Get the complete "Negadras" Psychology E-Book combined with the 30 Videos Premium Masterclass. This powerful duo by Natnael Biruk delivers the ultimate theoretical and practical knowledge focused entirely on building flawless trader psychology and mental discipline.`,
-                desc_am: `የተሟላው የትሬዲንግ ስነ-ልቦና ድል መሣሪያ! የ«ነጋድራሱ» መጽሐፍን ጥልቅ ዕውቀት እና 30 ቪዲዮዎችን በአንድ ላይ አጣምረው በታላቅ ቅናሽ ያግኙ። ናትናኤል ብሩክ ያዘጋጀው ይህ ጥምረት ሙሉ በሙሉ በትሬዲንግ ስነ-ልቦና እና በአዕምሮ ጥንካሬ ላይ ያተኮረ ለፎሬክስ፣ ክሪፕቶ እና ለህይወት ስኬት የተዘጋጀ መመሪያ።`,
-                price: "coming soon"
+                volumes: {
+                    1: {
+                        key_suffix: " (Book Vol 1 + Video)",
+                        title_en: "Both (Book Vol 1 + 30 Videos Bundle)",
+                        title_am: "ሁለቱንም በአንድ ላይ (መጽሐፍ ቅጽ 1 + 30 ቪዲዮዎች)",
+                        desc_en: `The Ultimate Trading Psychology Arsenal! Get the complete "Negadras" Volume 1 Psychology E-Book combined with the 30 Videos Premium Masterclass. This powerful duo by Natnael Biruk delivers the ultimate theoretical and practical knowledge focused entirely on building flawless trader psychology.`,
+                        desc_am: `የተሟላው የትሬዲንግ ስነ-ልቦና ድል መሣሪያ! የ«ነጋድራሱ» መጽሐፍ ቅጽ 1 ጥልቅ ዕውቀት እና 30 ቪዲዮዎችን በአንድ ላይ አጣምረው በታላቅ ቅናሽ ያግኙ። ናትናኤል ብሩክ ያዘጋጀው ይህ ጥምረት ሙሉ በሙሉ በትሬዲንግ ስነ-ልቦና እና በአዕምሮ ጥንካሬ ላይ ያተኮረ ለፎሬክስ፣ ክሪፕቶ እና ለህይወት ስኬት የተዘጋጀ መመሪያ።`,
+                        price: "coming soon"
+                    },
+                    2: {
+                        key_suffix: " (Book Vol 2 + Video)",
+                        title_en: "Both (Book Vol 2 + 30 Videos Bundle)",
+                        title_am: "ሁለቱንም በአንድ ላይ (መጽሐፍ ቅጽ 2 + 30 ቪዲዮዎች)",
+                        desc_en: `The Ultimate Trading Psychology Arsenal! Get the complete "Negadras Volume 2: Trading and Our Nervous System" Psychology E-Book combined with the 30 Videos Premium Masterclass. This powerful duo by Natnael Biruk delivers the ultimate advanced theoretical and practical knowledge focused entirely on market psychology.`,
+                        desc_am: `የተሟላው የትሬዲንግ ስነ-ልቦና ድል መሣሪያ! የ«ነጋድራሱ» ቅጽ ፪ መጽሐፍ ("ትሬዲንግ እና የነርቭ ሥርዓታችን") ጥልቅ ዕውቀት እና 30 ቪዲዮዎችን በአንድ ላይ አጣምረው በታላቅ ቅናሽ ያግኙ። ናትናኤል ብሩክ ያዘጋጀው ይህ ጥምረት ሙሉ በሙሉ በትሬዲንግ ስነ-ልቦና እና በአዕምሮ ጥንካሬ ላይ ያተኮረ ለፎሬክስ፣ ክሪፕቶ እና ለህይወት ስኬት የተዘጋጀ መመሪያ።`,
+                        price: "coming soon"
+                    }
+                }
             }
         };
         let currentMode = 1;
+        let selectedVolume = 1;
         let currentLang = 'en';
         let base64Image = null;
 
@@ -176,26 +226,107 @@
         tg.ready();
         tg.expand();
 
+        function setVolume(vol) {
+            selectedVolume = parseInt(vol);
+            
+            // Update volume buttons styling
+            const vol1Btn = document.getElementById('vol-1-btn');
+            const vol2Btn = document.getElementById('vol-2-btn');
+            
+            if (selectedVolume === 1) {
+                vol1Btn.className = "py-2 text-xs font-bold rounded-lg transition-all bg-[#2dd4bf] text-black";
+                vol2Btn.className = "py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-white";
+            } else {
+                vol1Btn.className = "py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-white";
+                vol2Btn.className = "py-2 text-xs font-bold rounded-lg transition-all bg-[#2dd4bf] text-black";
+            }
+            
+            updatePackage(currentMode);
+        }
+
+        function updateVolumeDisplay() {
+            const img1 = document.getElementById('book-img-1');
+            const img2 = document.getElementById('book-img-2');
+            const singleImg = document.getElementById('single-book-img');
+            
+            if (selectedVolume === 1) {
+                singleImg.src = "https://res.cloudinary.com/dlthi9a6h/image/upload/v1780275499/gbou0ytluerz7qozak6o.jpg";
+                
+                // Volume 1 is focused (scaled up, clear, tilted left)
+                img1.style.transform = "rotate(-6deg) translateX(-15px) scale(1.08)";
+                img1.style.zIndex = "20";
+                img1.style.opacity = "1";
+                img1.style.filter = "brightness(1) contrast(1)";
+                
+                // Volume 2 is background (dimmed, tilted right and pushed back)
+                img2.style.transform = "rotate(14deg) translateX(30px) scale(0.88)";
+                img2.style.zIndex = "10";
+                img2.style.opacity = "0.4";
+                img2.style.filter = "brightness(0.4) contrast(0.8)";
+            } else {
+                singleImg.src = "https://res.cloudinary.com/dlthi9a6h/image/upload/v1783469941/t9omu78mp9yqm2quvsto.png";
+                
+                // Volume 1 is background (dimmed, tilted left and pushed back)
+                img1.style.transform = "rotate(-14deg) translateX(-30px) scale(0.88)";
+                img1.style.zIndex = "10";
+                img1.style.opacity = "0.4";
+                img1.style.filter = "brightness(0.4) contrast(0.8)";
+                
+                // Volume 2 is focused (scaled up, clear, tilted right)
+                img2.style.transform = "rotate(6deg) translateX(15px) scale(1.08)";
+                img2.style.zIndex = "20";
+                img2.style.opacity = "1";
+                img2.style.filter = "brightness(1) contrast(1)";
+            }
+        }
+
         function updatePackage(val) {
             currentMode = parseInt(val);
-            document.getElementById('book-price').innerText = packages[currentMode].price;
             
             const isAm = currentLang === 'am';
-            document.getElementById('book-title').innerText = isAm ? packages[currentMode].title_am : packages[currentMode].title_en;
-            document.getElementById('book-desc').innerText = isAm ? packages[currentMode].desc_am : packages[currentMode].desc_en;
+            const volumeContainer = document.getElementById('volume-selector-container');
+            const pkg = packages[currentMode];
+            let price, title, desc;
+            
+            if (pkg.volumes) {
+                // Show volume selector
+                volumeContainer.classList.remove('hidden');
+                
+                const volData = pkg.volumes[selectedVolume];
+                price = volData.price;
+                title = isAm ? volData.title_am : volData.title_en;
+                desc = isAm ? volData.desc_am : volData.desc_en;
+            } else {
+                // Hide volume selector
+                volumeContainer.classList.add('hidden');
+                
+                price = pkg.price;
+                title = isAm ? pkg.title_am : pkg.title_en;
+                desc = isAm ? pkg.desc_am : pkg.desc_en;
+            }
+            
+            document.getElementById('book-price').innerText = price;
+            document.getElementById('book-title').innerText = title;
+            document.getElementById('book-desc').innerText = desc;
 
-            const bookImg = document.getElementById('book-img');
+            const coversContainer = document.getElementById('book-covers-container');
+            const singleBookImg = document.getElementById('single-book-img');
             const videoBox = document.getElementById('video-emoji-box');
 
             if (currentMode === 1) {
-                bookImg.classList.remove('hidden');
+                coversContainer.classList.remove('hidden');
+                singleBookImg.classList.add('hidden');
                 videoBox.classList.add('hidden');
+                updateVolumeDisplay();
             } else if (currentMode === 2) {
-                bookImg.classList.add('hidden');
+                coversContainer.classList.add('hidden');
+                singleBookImg.classList.add('hidden');
                 videoBox.classList.remove('hidden');
             } else if (currentMode === 3) {
-                bookImg.classList.remove('hidden');
+                coversContainer.classList.add('hidden');
+                singleBookImg.classList.remove('hidden');
                 videoBox.classList.remove('hidden');
+                updateVolumeDisplay();
             }
 
             for (let i = 1; i <= 3; i++) {
@@ -223,14 +354,18 @@
             document.getElementById('submit-btn').innerText = isAm ? "ትዕዛዙን አረጋግጥ" : "Confirm Order";
             document.getElementById('price-label').innerText = isAm ? "ዋጋ፦" : "PRICE:";
             document.getElementById('payment-label').innerHTML = isAm ? `በዚህ ቴሌብር ይላኩ፦ Nathnael <i data-lucide="copy" class="w-3 h-3 opacity-50"></i>` : `Send via Telebirr: Nathnael <i data-lucide="copy" class="w-3 h-3 opacity-50"></i>`;
-            
-            document.getElementById('book-title').innerText = isAm ? packages[currentMode].title_am : packages[currentMode].title_en;
-            document.getElementById('book-desc').innerText = isAm ? packages[currentMode].desc_am : packages[currentMode].desc_en;
             document.getElementById('book-author').innerText = isAm ? "በናትናኤል ብሩክ" : "By Natnael Biruk";
+            
+            document.getElementById('volume-selector-label').innerText = isAm ? "ቅጽ ይምረጡ / Select Volume" : "Select Volume / ቅጽ ይምረጡ";
             
             document.getElementById('warning-text').innerHTML = isAm ? 
                 `⚠️ ማሳሰቢያ፡ እባክዎን ትክክለኛ ስምዎን፣ ስልክ ቁጥርዎን እና ዩሰርኔምዎን ያስገቡ። የመጽሐፉ ፓስዎርድ የሚሰራው በእነዚህ መረጃዎች ላይ ተመስርቶ ስለሆነ ስህተት ካለ መጽሐፉን መክፈት አይችሉም።` : 
                 `⚠️ NOTICE: Please enter your real name, phone number, and username. The book's password is generated based on this info; any error means you won't be able to unlock the book.`;
+
+            updatePackage(currentMode);
+            if (window.lucide) {
+                lucide.createIcons();
+            }
         }
 
         function copyToClipboard(text, el) {
@@ -299,21 +434,33 @@
 
                 btn.innerText = currentLang === 'am' ? "✅ ትዕዛዙን በማስኬድ ላይ..." : "✅ Processing...";
 
+                const pkg = packages[currentMode];
+                let packageKey = pkg.key;
+                let packageTitle = currentLang === 'am' ? pkg.title_am : pkg.title_en;
+                let packagePrice = pkg.price;
+
+                if (pkg.volumes) {
+                    const volData = pkg.volumes[selectedVolume];
+                    packageKey = pkg.key + volData.key_suffix;
+                    packageTitle = currentLang === 'am' ? volData.title_am : volData.title_en;
+                    packagePrice = volData.price;
+                }
+
                 const orderData = {
                     user_id: tg.initDataUnsafe?.user?.id || "N/A",
                     init_data: tg.initData || "", 
                     book_id: currentMode,
-                    package_type: packages[currentMode].key, 
-                    book_title: currentLang === 'am' ? packages[currentMode].title_am : packages[currentMode].title_en,
+                    package_type: packageKey, 
+                    book_title: packageTitle,
                     name: name,
                     phone: phone,
                     email: email,
                     telegram_username: username,
-                    price: packages[currentMode].price,
+                    price: packagePrice,
                     receipt_url: imageUrl
                 };
 
-                const response = await fetch('https://negadrasbook.onrender.com/api/order', {
+                const response = await fetch('/api/order', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(orderData)
