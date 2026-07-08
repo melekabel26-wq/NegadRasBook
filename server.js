@@ -92,7 +92,13 @@ function syncUserToGoogle(userId, userData) {
         username: userData.username,
         points: userData.points || 0,
         invited_by: userData.invited_by || ""
-    }).catch(e => console.error("❌ Sync user to Google Error:", e.message));
+    }).then(response => {
+        if (response.data && response.data.success === false) {
+            console.error(`❌ Sync user ${userId} to Google Script Error:`, response.data.error);
+        } else {
+            console.log(`✅ User ${userId} sync to Google Sheet successful!`);
+        }
+    }).catch(e => console.error("❌ Sync user to Google Network Error:", e.message));
 }
 
 // 1. ከዳሽንቦርዱ ትዕዛዝ ሲመጣ
@@ -110,8 +116,14 @@ app.post('/api/order', async (req, res) => {
 
         if (GOOGLE_SHEET_URL) {
             axios.post(GOOGLE_SHEET_URL, sheetData)
-                .then(() => console.log("✅ Data successfully synced with Google Sheets!"))
-                .catch(err => console.error("❌ Google Sheets Sync Error:", err.message));
+                .then(response => {
+                    if (response.data && response.data.success === false) {
+                        console.error("❌ Google Sheets Script Error:", response.data.error);
+                    } else {
+                        console.log("✅ Data successfully synced with Google Sheets!");
+                    }
+                })
+                .catch(err => console.error("❌ Google Sheets Network Error:", err.message));
         }
 
         const users = loadUsers();
