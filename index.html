@@ -74,6 +74,9 @@
                     <!-- Book 2 (Volume 2) -->
                     <img id="book-img-2" src="https://res.cloudinary.com/dlthi9a6h/image/upload/v1783469941/t9omu78mp9yqm2quvsto.png" alt="Volume 2" 
                          class="w-28 h-40 object-cover rounded-lg shadow-2xl border border-white/10 absolute transition-all duration-500 origin-bottom cursor-pointer">
+                    <!-- Book 3 (Volume 3) -->
+                    <img id="book-img-3" src="https://res.cloudinary.com/dlthi9a6h/image/upload/v1786864202/vpn5mzchvnkbz3o39qi8.png" alt="Volume 3" 
+                         class="w-28 h-40 object-cover rounded-lg shadow-2xl border border-white/10 absolute transition-all duration-500 origin-bottom cursor-pointer">
                 </div>
 
                 <!-- 2. Single Book Cover (for Both mode, currentMode === 3) -->
@@ -90,9 +93,10 @@
             <!-- Volume selector buttons, visible only when Mode is Book (1) or Both (3) -->
             <div id="volume-selector-container" class="w-full flex flex-col gap-2 mt-1">
                 <span id="volume-selector-label" class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Select Volume / ቅጽ ይምረጡ</span>
-                <div class="grid grid-cols-2 gap-2 bg-slate-950/60 p-1 rounded-xl border border-white/5">
-                    <button type="button" onclick="setVolume(1)" id="vol-1-btn" class="py-2 text-xs font-bold rounded-lg transition-all bg-[#2dd4bf] text-black">ቅጽ 1 (Vol 1)</button>
-                    <button type="button" onclick="setVolume(2)" id="vol-2-btn" class="py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-white">ቅጽ 2 (Vol 2)</button>
+                <div class="grid grid-cols-3 gap-1.5 bg-slate-950/60 p-1 rounded-xl border border-white/5">
+                    <button type="button" onclick="setVolume(1)" id="vol-1-btn" class="py-2 text-[11px] font-bold rounded-lg transition-all bg-[#2dd4bf] text-black">ቅጽ 1</button>
+                    <button type="button" onclick="setVolume(2)" id="vol-2-btn" class="py-2 text-[11px] font-bold rounded-lg transition-all text-slate-400 hover:text-white">ቅጽ 2</button>
+                    <button type="button" onclick="setVolume(3)" id="vol-3-btn" class="py-2 text-[11px] font-bold rounded-lg transition-all text-slate-400 hover:text-white">ቅጽ 3</button>
                 </div>
             </div>
             
@@ -175,7 +179,7 @@
                         title_am: "«ነጋድራሱ» መጽሐፍ (PDF) ብቻ - ቅጽ 1",
                         desc_en: `"NegadRasu" is the first comprehensive Amharic trading psychology book compiled by Natnael Biruk. Just as the historic trade generals led commerce with wisdom and discipline, this book guides today's youth from emotional chaos to mental clarity, making them true leaders in Forex, Crypto, and life success.`,
                         desc_am: `«ነጋድራሱ» በአዘጋጅ ናትናኤል ብሩክ የቀረበ የመጀመሪያው የተሟላ አማርኛ የትሬዲንግ ስነልቦና መጽሐፍ ነው። የቀደሙት የንግድ ጄኔራሎች ነጋድራሶች በዕውቀትና በሥርዓት የንግድ መስመሩን እንደመሩት ሁሉ፣ ይህ መጽሐፍ የዛሬውን ወጣት ከስሜት ማዕበል ወደ አዕምሮ ሰላም በመውሰድ በፎሬክስ, ክሪፕቶ እና በህይወት ስኬት ላይ እውነተኛ መሪ ያደርገዋል።`,
-                        price: "1000.00"
+                        price: "799.00"
                     },
                     2: {
                         key_suffix: " Volume 2",
@@ -183,7 +187,15 @@
                         title_am: "«ነጋድራሱ» መጽሐፍ (PDF) ብቻ - ቅጽ 2",
                         desc_en: `"Negadras Volume 2: Trading and Our Nervous System; Market Decisions Measured by Science" by Natnael Biruk. This book examines trading decisions through the lens of neuroscience, offering practical guidance on cognitive control, emotional balance, and scientific risk execution in financial markets.`,
                         desc_am: `«ነጋድራሱ ቅጽ ፪» ትሬዲንግ እና የነርቭ ሥርዓታችን፤ የገበያ ውሳኔዎች በሳይንስ ሲመዘኑ በአዘጋጅ ናትናኤል ብሩክ። ይህ መጽሐፍ በፎሬክስ እና ክሪፕቶ ገበያ ውስጥ የሚሰጡ የውሳኔ አወሳሰድ ሂደቶችን በነርቭ ሳይንስ እይታ በመተንተን፣ ስሜትን በመቆጣጠር ረገድ ከፍተኛ ሳይንሳዊ ግንዛቤዎችን የሚሰጥ የትሬዲንግ ስነ-ልቦና መመሪያ ነው።`,
-                        price: "2000.00"
+                        price: "999.00 ለ 24 ሰአት ብቻ"
+                    },
+                    3: {
+                        key_suffix: " Volume 3",
+                        title_en: "The Negadras Book (PDF) Only - Volume 3 (48 Rules of Trading)",
+                        title_am: "«ነጋድራሱ» መጽሐፍ (PDF) ብቻ - ቅጽ 3 «48ቱ የትሬዲንግ ህጎች»",
+                        desc_en: `"Negadras Volume 3: 48 Rules of Trading" by Natnael Biruk. This book provides essential trading principles, discipline masterclasses, and foundational psychological rules to navigate financial markets with clarity and focus.`,
+                        desc_am: `«ነጋድራሱ ቅጽ ፫» 48ቱ የትሬዲንግ ህጎች በአዘጋጅ ናትናኤል ብሩክ። በፎሬክስ እና ክሪፕቶ ገበያ ውስጥ የስኬት፣ የዲሲፕሊን እና የአስተሳሰብ መመሪያ የሆኑ 48ቱ ወርቃማ የትሬዲንግ ህጎች የተዳሰሱበት ጥልቅ መጽሐፍ ነው።`,
+                        price: "300.00"
                     }
                 }
             },
@@ -213,6 +225,14 @@
                         desc_en: `The Ultimate Trading Psychology Arsenal! Get the complete "Negadras Volume 2: Trading and Our Nervous System" Psychology E-Book combined with the 30 Videos Premium Masterclass. This powerful duo by Natnael Biruk delivers the ultimate advanced theoretical and practical knowledge focused entirely on market psychology.`,
                         desc_am: `የተሟላው የትሬዲንግ ስነ-ልቦና ድል መሣሪያ! የ«ነጋድራሱ» ቅጽ ፪ መጽሐፍ ("ትሬዲንግ እና የነርቭ ሥርዓታችን") ጥልቅ ዕውቀት እና 30 ቪዲዮዎችን በአንድ ላይ አጣምረው በታላቅ ቅናሽ ያግኙ። ናትናኤል ብሩክ ያዘጋጀው ይህ ጥምረት ሙሉ በሙሉ በትሬዲንግ ስነ-ልቦና እና በአዕምሮ ጥንካሬ ላይ ያተኮረ ለፎሬክስ፣ ክሪፕቶ እና ለህይወት ስኬት የተዘጋጀ መመሪያ።`,
                         price: "coming soon"
+                    },
+                    3: {
+                        key_suffix: " (Book Vol 3 + Video)",
+                        title_en: "Both (Book Vol 3 + 30 Videos Bundle)",
+                        title_am: "ሁለቱንም በአንድ ላይ (መጽሐፍ ቅጽ 3 + 30 ቪዲዮዎች)",
+                        desc_en: `The Ultimate Trading Psychology Arsenal! Get the complete "Negadras Volume 3: 48 Rules of Trading" Psychology E-Book combined with the 30 Videos Premium Masterclass by Natnael Biruk.`,
+                        desc_am: `የተሟላው የትሬዲንግ ስነ-ልቦና ድል መሣሪያ! የ«ነጋድራሱ» ቅጽ ፫ መጽሐፍ ("48ቱ የትሬዲንግ ህጎች") ጥልቅ ዕውቀት እና 30 ቪዲዮዎችን በአንድ ላይ አጣምረው በታላቅ ቅናሽ ያግኙ።`,
+                        price: "coming soon"
                     }
                 }
             }
@@ -229,16 +249,15 @@
         function setVolume(vol) {
             selectedVolume = parseInt(vol);
             
-            // Update volume buttons styling
-            const vol1Btn = document.getElementById('vol-1-btn');
-            const vol2Btn = document.getElementById('vol-2-btn');
-            
-            if (selectedVolume === 1) {
-                vol1Btn.className = "py-2 text-xs font-bold rounded-lg transition-all bg-[#2dd4bf] text-black";
-                vol2Btn.className = "py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-white";
-            } else {
-                vol1Btn.className = "py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-white";
-                vol2Btn.className = "py-2 text-xs font-bold rounded-lg transition-all bg-[#2dd4bf] text-black";
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById(`vol-${i}-btn`);
+                if (btn) {
+                    if (i === selectedVolume) {
+                        btn.className = "py-2 text-[11px] font-bold rounded-lg transition-all bg-[#2dd4bf] text-black";
+                    } else {
+                        btn.className = "py-2 text-[11px] font-bold rounded-lg transition-all text-slate-400 hover:text-white";
+                    }
+                }
             }
             
             updatePackage(currentMode);
@@ -247,36 +266,76 @@
         function updateVolumeDisplay() {
             const img1 = document.getElementById('book-img-1');
             const img2 = document.getElementById('book-img-2');
+            const img3 = document.getElementById('book-img-3');
             const singleImg = document.getElementById('single-book-img');
             
+            const vol1Src = "https://res.cloudinary.com/dlthi9a6h/image/upload/v1780275499/gbou0ytluerz7qozak6o.jpg";
+            const vol2Src = "https://res.cloudinary.com/dlthi9a6h/image/upload/v1783469941/t9omu78mp9yqm2quvsto.png";
+            const vol3Src = "https://res.cloudinary.com/dlthi9a6h/image/upload/v1786864202/vpn5mzchvnkbz3o39qi8.png";
+            
             if (selectedVolume === 1) {
-                singleImg.src = "https://res.cloudinary.com/dlthi9a6h/image/upload/v1780275499/gbou0ytluerz7qozak6o.jpg";
+                singleImg.src = vol1Src;
                 
-                // Volume 1 is focused (scaled up, clear, tilted left)
-                img1.style.transform = "rotate(-6deg) translateX(-15px) scale(1.08)";
-                img1.style.zIndex = "20";
-                img1.style.opacity = "1";
-                img1.style.filter = "brightness(1) contrast(1)";
+                if (img1) {
+                    img1.style.transform = "rotate(-6deg) translateX(-35px) scale(1.08)";
+                    img1.style.zIndex = "30";
+                    img1.style.opacity = "1";
+                    img1.style.filter = "brightness(1) contrast(1)";
+                }
+                if (img2) {
+                    img2.style.transform = "rotate(4deg) translateX(0px) scale(0.92)";
+                    img2.style.zIndex = "20";
+                    img2.style.opacity = "0.6";
+                    img2.style.filter = "brightness(0.6) contrast(0.9)";
+                }
+                if (img3) {
+                    img3.style.transform = "rotate(14deg) translateX(35px) scale(0.82)";
+                    img3.style.zIndex = "10";
+                    img3.style.opacity = "0.35";
+                    img3.style.filter = "brightness(0.35) contrast(0.8)";
+                }
+            } else if (selectedVolume === 2) {
+                singleImg.src = vol2Src;
                 
-                // Volume 2 is background (dimmed, tilted right and pushed back)
-                img2.style.transform = "rotate(14deg) translateX(30px) scale(0.88)";
-                img2.style.zIndex = "10";
-                img2.style.opacity = "0.4";
-                img2.style.filter = "brightness(0.4) contrast(0.8)";
-            } else {
-                singleImg.src = "https://res.cloudinary.com/dlthi9a6h/image/upload/v1783469941/t9omu78mp9yqm2quvsto.png";
+                if (img1) {
+                    img1.style.transform = "rotate(-14deg) translateX(-35px) scale(0.82)";
+                    img1.style.zIndex = "10";
+                    img1.style.opacity = "0.35";
+                    img1.style.filter = "brightness(0.35) contrast(0.8)";
+                }
+                if (img2) {
+                    img2.style.transform = "rotate(0deg) translateX(0px) scale(1.08)";
+                    img2.style.zIndex = "30";
+                    img2.style.opacity = "1";
+                    img2.style.filter = "brightness(1) contrast(1)";
+                }
+                if (img3) {
+                    img3.style.transform = "rotate(14deg) translateX(35px) scale(0.82)";
+                    img3.style.zIndex = "20";
+                    img3.style.opacity = "0.6";
+                    img3.style.filter = "brightness(0.6) contrast(0.9)";
+                }
+            } else if (selectedVolume === 3) {
+                singleImg.src = vol3Src;
                 
-                // Volume 1 is background (dimmed, tilted left and pushed back)
-                img1.style.transform = "rotate(-14deg) translateX(-30px) scale(0.88)";
-                img1.style.zIndex = "10";
-                img1.style.opacity = "0.4";
-                img1.style.filter = "brightness(0.4) contrast(0.8)";
-                
-                // Volume 2 is focused (scaled up, clear, tilted right)
-                img2.style.transform = "rotate(6deg) translateX(15px) scale(1.08)";
-                img2.style.zIndex = "20";
-                img2.style.opacity = "1";
-                img2.style.filter = "brightness(1) contrast(1)";
+                if (img1) {
+                    img1.style.transform = "rotate(-14deg) translateX(-35px) scale(0.82)";
+                    img1.style.zIndex = "10";
+                    img1.style.opacity = "0.35";
+                    img1.style.filter = "brightness(0.35) contrast(0.8)";
+                }
+                if (img2) {
+                    img2.style.transform = "rotate(-4deg) translateX(0px) scale(0.92)";
+                    img2.style.zIndex = "20";
+                    img2.style.opacity = "0.6";
+                    img2.style.filter = "brightness(0.6) contrast(0.9)";
+                }
+                if (img3) {
+                    img3.style.transform = "rotate(6deg) translateX(35px) scale(1.08)";
+                    img3.style.zIndex = "30";
+                    img3.style.opacity = "1";
+                    img3.style.filter = "brightness(1) contrast(1)";
+                }
             }
         }
 
